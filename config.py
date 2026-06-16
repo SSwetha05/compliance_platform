@@ -3,15 +3,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_PORT = os.getenv("DB_PORT")
+Db_Host = os.getenv("Db_Host")
+Db_Name = os.getenv("Db_Name")
+Db_User = os.getenv("Db_User")
+Db_Password = os.getenv("Db_Password")
+Db_Port = os.getenv("Db_Port")
 
-UPLOAD_FOLDER = "uploads"
+Upload_Folder = "uploads"
 
 os.makedirs(
-    UPLOAD_FOLDER,
+    Upload_Folder,
     exist_ok=True
 )
