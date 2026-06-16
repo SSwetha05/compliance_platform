@@ -1,5 +1,6 @@
-#venv
-/venv/.env
-
-#config
-/config.py
+venv/
+.venv/
+uploads/
+__pycache__/
+.env
+.vscode/
