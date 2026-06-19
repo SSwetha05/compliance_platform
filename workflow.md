@@ -1,60 +1,69 @@
-# Compliance Lifecycle Management Platform
+# Compliance Workflow Platform - Workflow Documentation
+
+## Overview
+
+The Compliance Workflow Platform is a Streamlit-based application designed to manage the end-to-end compliance assessment lifecycle.
+
+The platform replaces fragmented workflows currently managed through email, Excel trackers, questionnaires, checklists, and manual reviews.
+
+Primary objectives:
+
+* Centralize compliance workflow management
+* Maintain version history for questionnaires and checklists
+* Capture review comments and approvals
+* Track workflow status across engagements
+* Improve reviewer efficiency through version-based change tracking
+
+---
+
+# Workflow Stages
 
 ## 1. Client Creation
 
 ### Purpose
 
-Create and maintain client master records.
+Create and maintain client master data.
 
 ### Database Table
 
 clients
 
-### Responsible Person
+### Output
 
-Admin / Analyst
-
-### Status Values
-
-N/A
-
-### Key Fields
-
-* client_id
-* client_name
-* industry
-* contact_name
-* contact_email
+Client record available for compliance assessments.
 
 ---
 
-## 2. Assessment Creation
+## 2. Compliance Type Creation
 
 ### Purpose
 
-Create a compliance engagement for a specific client.
+Create compliance engagements for a client.
+
+### Examples
+
+* HR & Labour
+* Tax
+* EHS
+* Data Privacy
 
 ### Database Table
 
 assessments
 
-### Responsible Person
+### Notes
 
-Analyst
+Database table name remains:
 
-### Status Values
+assessments
 
-* Draft
-* Active
-* Completed
+UI label displayed as:
 
-### Key Fields
+Compliance Type
 
-* assessment_id
-* client_id
-* assessment_name
-* state
-* status
+### Output
+
+Assessment record linked to a client.
 
 ---
 
@@ -62,34 +71,30 @@ Analyst
 
 ### Purpose
 
-Upload questionnaire versions for review.
+Associate uploads compliance questionnaire.
+
+### Workflow
+
+Associate
+→ Upload Questionnaire
+→ Save File
+→ Create Version Record
 
 ### Database Table
 
 questionnaires
 
-### Responsible Person
+### Status
 
-Assosiate/ Consultant
+Draft
 
-### Status Values
+or
 
-* Draft
-* Under Review
-* Changes Requested
-* Approved
-* Sent To Client
-* Client Responded
+Under Review
 
-### Key Fields
+### Output
 
-* questionnaire_id
-* assessment_id
-* version
-* file_path
-* status
-* uploaded_by
-* uploaded_at
+Questionnaire version created.
 
 ---
 
@@ -97,59 +102,61 @@ Assosiate/ Consultant
 
 ### Purpose
 
-Review questionnaire and request modifications before client submission.
+Senior reviewer validates questionnaire content.
+
+### Workflow
+
+Associate Upload
+↓
+Senior Review
+↓
+Approve / Request Changes
+
+### Review Actions
+
+Approved
+
+Changes Requested
 
 ### Database Table
 
 questionnaire_reviews
 
-### Responsible Person
+### Status Updates
 
-Senior Consultant/Consultant
+Approved
+→ Questionnaire Status = Approved
 
-### Decision Values
-
-* Approved
-* Changes Requested
-
-### Key Fields
-
-* review_id
-* questionnaire_id
-* reviewer_name
-* review_comment
-* decision
-* reviewed_at
+Changes Requested
+→ Questionnaire Status = Changes Requested
 
 ---
 
-## 5. Client Response Submission
+## 5. Client Response Upload
 
 ### Purpose
 
-Record completed questionnaire received from client.
+Store completed questionnaire responses received from clients.
+
+### Workflow
+
+Questionnaire Sent
+↓
+Client Responds
+↓
+Response Uploaded
 
 ### Database Table
 
 client_responses
 
-### Responsible Person
-
-Client 
-
 ### Status Values
 
-* Awaiting Response
-* Partially Completed
-* Completed
+Awaiting Response
 
-### Key Fields
+Partially Completed
 
-* response_id
-* questionnaire_id
-* response_file_path
-* status
-* uploaded_at
+Completed
 
 ---
 
@@ -157,115 +164,331 @@ Client
 
 ### Purpose
 
-Create compliance checklist based on client responses.
+Associate prepares compliance checklist based on:
+
+* Compliance assessment scope
+* Questionnaire responses
+* Regulatory requirements
+
+### Checklist Structure
+
+Current template:
+
+* Comp_ID
+* Centre/ State
+* Name of Mother Act
+* Name of Rules
+* Compliance/ Provision Stat
+* Applicability
+* Compliance Description
+
+### Workflow
+
+Associate
+↓
+Prepare Checklist
+↓
+Upload Checklist Version
 
 ### Database Table
 
 checklists
 
-### Responsible Person
+### Versioning
 
-Assosiate/ Consultant
+Supported through:
 
-### Status Values
+checklists.version
 
-* Draft
-* Under Review
-* Changes Requested
-* Approved
+Example:
 
-### Key Fields
+V1
+V2
+V3
 
-* checklist_id
-* assessment_id
-* version
-* file_path
-* status
-* uploaded_by
-* uploaded_at
+### Status
+
+Draft
+
+Under Review
+
+Approved
+
+Changes Requested
 
 ---
 
 ## 7. Checklist Review
 
-### Purpose
+### Current Problem
 
-Review checklist and request corrections before final approval.
+Checklist creation requires approximately:
 
-### Database Table
+3–4 hours
 
-checklist_reviews
+Checklist review also requires:
 
-### Responsible Person
+3–4 hours
 
-Senior Consultant/ Consultant
-
-### Decision Values
-
-* Approved
-* Changes Requested
-
-### Key Fields
-
-* review_id
-* checklist_id
-* reviewer_name
-* review_comment
-* decision
-* reviewed_at
+Reviewers currently re-review the entire checklist even when only a small number of rows have changed.
 
 ---
 
-# End-to-End Workflow
+## Proposed Solution
+
+Implement version-based checklist comparison similar to GitHub Pull Requests.
+
+### Review Workflow
+
+Associate Uploads V1
+↓
+Senior Reviewer Reviews
+↓
+Changes Requested
+↓
+Associate Uploads V2
+↓
+System Compares V2 vs V1
+↓
+Reviewer Reviews Only Changes
+↓
+Approve / Request Changes
+
+---
+
+## Checklist Diff Process
+
+### Inputs
+
+Current Version File (checklist_v2)
+
+Previous Version File (checklist_v1)
+
+### Comparison Engine
+
+Python Pandas
+
+### Comparison Types
+
+Added Rows
+
+Removed Rows
+
+Modified Rows
+
+### Review Summary
+
+Example:
+
+Total Compliances: 742
+
+Added: 3
+
+Modified: 4
+
+Deleted: 12
+
+---
+## Additions
+Introduced
+
+Comp_ID
+
+Example:
+
+CMP01
+
+CMP02
+
+CMP03
+
+Benefits:
+
+* Accurate version comparison
+* Reliable modification tracking
+* Faster reviews
+* Better audit trail
+---
+
+## Review Actions
+
+Reviewer can:
+
+### Approve
+
+Status:
+
+Approved
+
+### Request Changes
+
+Status:
+
+Changes Requested
+
+---
+
+## Dashboard Workflow
+
+### Purpose
+
+Provide management visibility.
+
+### Metrics
+
+Total Clients
+
+Total Compliance Types
+
+Pending Questionnaire Reviews
+
+Pending Checklist Reviews
+
+Approved Checklists
+
+Completed Client Responses
+
+---
+
+# User Roles (Future)
+
+## Associate
+
+Responsibilities:
+
+* Create questionnaires
+* Upload questionnaires
+* Upload client responses
+* Create checklists
+* Upload revised versions
+
+---
+
+## Senior Reviewer
+
+Responsibilities:
+
+* Review questionnaires
+* Review checklists
+* Approve or request changes
+* Monitor quality
+
+---
+
+## Admin
+
+Responsibilities:
+
+* Manage users
+* Manage clients
+* Configure workflows
+* Dashboard oversight
+
+---
+
+# File Storage Workflow
+
+Current:
+
+Local uploads folder
+
+uploads/
+
+### Example
+
+uploads/questionnaire_v1.xlsx
+
+uploads/checklist_v2.xlsx
+
+### Future
+
+* Azure Storage
+
+---
+
+# Status Lifecycle
+
+## Questionnaire
+
+Draft
+↓
+Under Review
+↓
+Approved
+
+or
+
+Changes Requested
+↓
+Reupload
+↓
+Under Review
+
+---
+
+## Checklist
+
+Draft
+↓
+Under Review
+↓
+Approved
+
+or
+
+Changes Requested
+↓
+Reupload New Version
+↓
+Under Review
+
+---
+
+# MVP Scope
+
+Included
+
+* Client Management
+* Compliance Type Management
+* Questionnaire Upload
+* Questionnaire Review
+* Client Responses
+* Checklist Upload
+* Checklist Review
+* Version Tracking
+* Dashboard
+* File Upload Storage
+
+Not Included
+
+* Authentication
+* Role-Based Access Control
+* Email Integration
+* AI Checklist Generation
+* Row-Level Review Threads
+
+---
+
+# Long-Term Vision
+
+Create a centralized compliance operating platform where:
 
 Client
 ↓
-Assessment Created
+Assessment
 ↓
-Questionnaire Uploaded
+Questionnaire
 ↓
-Questionnaire Review
+Review
 ↓
-Changes Requested (if any)
+Client Response
 ↓
-Questionnaire Approved
+Checklist
 ↓
-Questionnaire Sent To Client
+Version Comparison
 ↓
-Client Response Received
+Review
 ↓
-Checklist Created
-↓
-Checklist Review
-↓
-Changes Requested (if any)
-↓
-Checklist Approved
+Dashboard Tracking
 
-# Dashboard Status View
-
-For each Assessment:
-
-* Client Name
-* Assessment Name
-* Questionnaire Status
-* Client Response Status
-* Checklist Status
-
-Test Data:
-
-ABC Manufacturing
-
-* Questionnaire: Approved
-* Client Response: Completed
-* Checklist: Under Review
-
-Future Enhancements
--------------------
-- Automatic questionnaire emailing
-- Checklist auto-generation from client responses
-- User authentication and role management
-- Review comment threads
-- Evidence/document repository
-- Compliance law library integration
-- Workshop tracking and closure management
+is managed within a single system with full auditability, version history, and reduced reviewer effort.
