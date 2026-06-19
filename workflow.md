@@ -1,4 +1,4 @@
-# Compliance Assessment Workflow
+# Compliance Lifecycle Management Platform
 
 ## 1. Client Creation
 
