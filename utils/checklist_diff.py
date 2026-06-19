@@ -1,8 +1,7 @@
 import pandas as pd
 
 KEY_COLUMNS = [
-    "Name of Mother Act",
-    "Name of Rules"
+    "Comp_ID"
 ]
 
 
