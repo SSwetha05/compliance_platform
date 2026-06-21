@@ -101,7 +101,7 @@ if selected != "Select Version":
         if not diff["added"].empty:
             st.dataframe(
                 diff["added"],
-                use_container_width=True
+                width='stretch'
             )
 
         st.subheader("Modified Compliances")
@@ -130,14 +130,14 @@ if selected != "Select Version":
 
                     st.dataframe(
                         old_df,
-                        use_container_width=True
+                        width='stretch'
                     )
 
                     st.write("New")
 
                     st.dataframe(
                         new_df,
-                        use_container_width=True
+                        width='stretch'
                     )
 
         st.subheader("Deleted Compliances")
@@ -146,7 +146,7 @@ if selected != "Select Version":
 
             st.dataframe(
                 diff["deleted"],
-                use_container_width=True
+                width='stretch'
             )
 
     st.divider()

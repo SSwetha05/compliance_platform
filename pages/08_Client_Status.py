@@ -5,14 +5,14 @@ st.title("Dashboard")
 
 query = """
 SELECT
-    a.assessment_id,
-    a.assessment_name AS compliance_type,
+    l.law_id,
+    l.law_name AS compliance_type,
     c.client_name,
 
     (
         SELECT q.status
         FROM questionnaires q
-        WHERE q.assessment_id = a.assessment_id
+        WHERE q.law_id = l.law_id
         ORDER BY q.version DESC
         LIMIT 1
     ) AS questionnaire_status,
@@ -22,7 +22,7 @@ SELECT
         FROM client_responses cr
         JOIN questionnaires q
             ON cr.questionnaire_id = q.questionnaire_id
-        WHERE q.assessment_id = a.assessment_id
+        WHERE q.law_id = l.law_id
         ORDER BY cr.uploaded_at DESC
         LIMIT 1
     ) AS client_response_status,
@@ -30,14 +30,14 @@ SELECT
     (
         SELECT cl.status
         FROM checklists cl
-        WHERE cl.assessment_id = a.assessment_id
+        WHERE cl.law_id = l.law_id
         ORDER BY cl.version DESC
         LIMIT 1
     ) AS checklist_status
 
-FROM assessments a
+FROM law_areas l
 JOIN clients c
-    ON a.client_id = c.client_id
+    ON l.client_id = c.client_id
 
 ORDER BY c.client_name;
 """

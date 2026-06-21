@@ -4,21 +4,21 @@ from database import run_query, execute_query
 
 st.title("Checklists")
 
-assessments = run_query("""
+law_areas = run_query("""
 SELECT
-    assessment_id,
-    assessment_name
-FROM assessments
+    law_id,
+    law_name
+FROM law_areas
 """)
 
-assessment_map = {
-    row["assessment_name"]: row["assessment_id"]
-    for _, row in assessments.iterrows()
+law_areas_map = {
+    row["law_name"]: row["law_id"]
+    for _, row in law_areas.iterrows()
 }
 
-selected_assessment = st.selectbox(
+selected_law = st.selectbox(
     "Compliance Type",
-    options=["Select Compliance Type"] + list(assessment_map.keys()),
+    options=["Select Compliance Type"] + list(law_areas_map.keys()),
     index=0
 )
 
@@ -58,7 +58,7 @@ if st.button("Save Checklist"):
         """
         INSERT INTO checklists
         (
-            assessment_id,
+            law_id,
             version,
             status,
             file_path,
@@ -67,11 +67,11 @@ if st.button("Save Checklist"):
         VALUES (%s,%s,%s,%s,%s)
         """,
         (
-            assessment_map[selected_assessment],
+            law_areas_map[selected_law],
             version,
             status,
             file_path,
-            "junior_user"
+            "Associate"
         )
     )
 

@@ -11,7 +11,7 @@ st.caption("Compliance Lifecycle Management Platform")
 st.markdown(
 """
 Welcome to RegiX, a centralized platform for managing the compliance
-assessment lifecycle from questionnaire creation through checklist review
+lifecycle from questionnaire creation through checklist review
 and final approval.
 
 ```

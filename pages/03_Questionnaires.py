@@ -4,28 +4,28 @@ from config import Upload_Folder
 
 st.title("Questionnaires")
 
-assessments = run_query(
+law_areas = run_query(
     """
     SELECT
-        assessment_id,
-        assessment_name
-    FROM assessments
+        law_id,
+        law_name
+    FROM law_areas
     """
 )
 
-assessment_map = {
-    row["assessment_name"]:
-    row["assessment_id"]
-    for _, row in assessments.iterrows()
+law_areas_map = {
+    row["law_name"]:
+    row["law_id"]
+    for _, row in law_areas.iterrows()
 }
 
 uploaded_file = st.file_uploader(
     "Upload Questionnaire"
 )
 
-selected_assessment = st.selectbox(
+selected_law = st.selectbox(
     "Compliance Type",
-    options=["Select Compliance Type"] + list(assessment_map.keys()),
+    options=["Select Compliance Type"] + list(law_areas_map.keys()),
     index=0
 )
 
@@ -63,7 +63,7 @@ if st.button("Save Questionnaire"):
         """
         INSERT INTO questionnaires
         (
-            assessment_id,
+            law_id,
             version,
             status,
             file_path,
@@ -72,7 +72,7 @@ if st.button("Save Questionnaire"):
         VALUES (%s,%s,%s,%s,%s)
         """,
         (
-            assessment_map[selected_assessment],
+            law_areas_map[selected_law],
             version,
             status,
             file_path,
