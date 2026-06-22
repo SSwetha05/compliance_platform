@@ -19,7 +19,13 @@ Use the navigation menu on the left to access different stages of the
 workflow.
 """
 )
-
+st.markdown("""
+<style>
+button[kind="header"] {
+    transform: scale(1.5);
+}
+</style>
+""", unsafe_allow_html=True)
 st.divider()
 
 st.subheader("Compliance Workflow")
