@@ -31,11 +31,11 @@ with col1:
     st.page_link("pages/04_Questionnaire_review.py", label="Questionnaire Review")
 
 with col2:
-    st.page_link("pages/05_Client_Responses.py", label="Client Responses")
+    st.page_link("pages/05_Client_responses.py", label="Client Responses")
     st.page_link("pages/06_Checklists.py", label="Checklists")
     st.page_link("pages/07_Checklist_review.py", label="Checklist Review")
     st.page_link("pages/08_Client_Status.py", label="Client Status")
-    
+
 st.divider()
 
 st.subheader("Compliance Workflow")
