@@ -2,7 +2,8 @@ import streamlit as st
 
 st.set_page_config(
 page_title="RegiX",
-layout="wide"
+layout="wide",
+initial_sidebar_state="expanded"
 )
 
 st.title("RegiX")
@@ -14,7 +15,6 @@ Welcome to RegiX, a centralized platform for managing the compliance
 lifecycle from questionnaire creation through checklist review
 and final approval.
 
-```
 Use the navigation menu on the left to access different stages of the
 workflow.
 """
