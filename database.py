@@ -8,7 +8,8 @@ def get_connection():
         database=Db_Name,
         user=Db_User,
         password=Db_Password,
-        port=Db_Port
+        port=Db_Port,
+        sslmode = 'require'
     )
 
 def run_query(query, params=None):
