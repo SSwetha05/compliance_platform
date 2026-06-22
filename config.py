@@ -5,17 +5,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 try:
-    Db_Host = st.secrets["DB_HOST"]
-    Db_Name = st.secrets["DB_NAME"]
-    Db_User = st.secrets["DB_USER"]
-    Db_Password = st.secrets["DB_PASSWORD"]
-    Db_Port = st.secrets["DB_PORT"]
+    Db_Host = st.secrets["Db_Host"]
+    Db_Name = st.secrets["Db_Name"]
+    Db_User = st.secrets["Db_User"]
+    Db_Password = st.secrets["Db_Password"]
+    Db_Port = st.secrets["Db_Port"]
 except Exception:
-    Db_Host = os.getenv("DB_HOST")
-    Db_Name = os.getenv("DB_NAME")
-    Db_User = os.getenv("DB_USER")
-    Db_Password = os.getenv("DB_PASSWORD")
-    Db_Port = os.getenv("DB_PORT")
+    Db_Host = os.getenv("Db_Host")
+    Db_Name = os.getenv("Db_Name")
+    Db_User = os.getenv("Db_User")
+    Db_Password = os.getenv("Db_Password")
+    Db_Port = os.getenv("Db_Port")
 
 Upload_Folder = "uploads"
 
