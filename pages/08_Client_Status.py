@@ -1,7 +1,7 @@
 import streamlit as st
 from database import run_query
 
-st.title("Dashboard")
+st.title("Client Status Report")
 
 query = """
 SELECT
