@@ -19,13 +19,23 @@ Use the navigation menu on the left to access different stages of the
 workflow.
 """
 )
-st.markdown("""
-<style>
-button[kind="header"] {
-    transform: scale(1.5);
-}
-</style>
-""", unsafe_allow_html=True)
+
+st.subheader("Quick Navigation")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.page_link("pages/01_Client_creation.py", label="Client Creation")
+    st.page_link("pages/02_Compliance_Type.py", label="Compliance Types")
+    st.page_link("pages/03_Questionnaires.py", label="Questionnaires")
+    st.page_link("pages/04_Questionnaire_review.py", label="Questionnaire Review")
+
+with col2:
+    st.page_link("pages/05_Client_Responses.py", label="Client Responses")
+    st.page_link("pages/06_Checklists.py", label="Checklists")
+    st.page_link("pages/07_Checklist_review.py", label="Checklist Review")
+    st.page_link("pages/08_Client_Status.py", label="Client Status")
+    
 st.divider()
 
 st.subheader("Compliance Workflow")
