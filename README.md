@@ -17,31 +17,6 @@ The platform enables teams to manage compliance engagements, track assessment pr
 - **Checklist Version Comparison:** Compare checklist versions using `Comp_ID` to identify added, modified, and deleted compliances.
 - **Dashboard:** Track compliance engagements, review statuses, and workflow progress.
 
-## Project Structure
-
-compliance_platform/
-├── Home_Page.py
-├── database.py
-├── config.py
-├── requirements.txt
-├── .gitignore
-├── uploads/
-├── pages/
-│   ├── 01_Client_creation.py
-│   ├── 02_Compliance_Types.py
-│   ├── 03_Questionnaires.py
-│   ├── 04_Questionnaire_Reviews.py
-│   ├── 05_Client_Responses.py
-│   ├── 06_Checklists.py
-│   ├── 07_Checklist_Reviews.py
-│   └── 08_Client_Status.py
-├── utils/
-│   └── checklist_diff.py
-└── sql/
-    ├── create_tables.sql
-    ├── seed_data.sql
-    └── test_data.sql
-
 ## Checklist Version Comparison
 
 Checklist reviews are designed to reduce the effort required to review revised checklists.
